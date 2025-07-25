@@ -3,6 +3,9 @@ package com.example.Estacionamento.web.Controller;
 
 import com.example.Estacionamento.Entity.Usuario;
 import com.example.Estacionamento.Service.UsuarioService;
+import com.example.Estacionamento.web.DTO.UsuarioCreateDTO;
+import com.example.Estacionamento.web.DTO.UsuarioResponseDTO;
+import com.example.Estacionamento.web.DTO.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -19,9 +22,9 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<Usuario> create(@RequestBody Usuario usuario) {
-        Usuario user = usuarioService.salvar(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    public ResponseEntity<UsuarioResponseDTO> create(@RequestBody UsuarioCreateDTO createDTO) {
+        Usuario user = usuarioService.salvar(UsuarioMapper.toUsuario(createDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toUsuariodto(user));
     }
 
     @GetMapping("/{id}")
