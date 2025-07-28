@@ -5,7 +5,9 @@ import com.example.Estacionamento.Entity.Usuario;
 import com.example.Estacionamento.Service.UsuarioService;
 import com.example.Estacionamento.web.DTO.UsuarioCreateDTO;
 import com.example.Estacionamento.web.DTO.UsuarioResponseDTO;
+import com.example.Estacionamento.web.DTO.UsuarioSenhaDTO;
 import com.example.Estacionamento.web.DTO.mapper.UsuarioMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,28 +23,28 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<UsuarioResponseDTO> create(@RequestBody UsuarioCreateDTO createDTO) {
+    public ResponseEntity<UsuarioResponseDTO> create(@Valid  @RequestBody UsuarioCreateDTO createDTO) {
         Usuario user = usuarioService.salvar(UsuarioMapper.toUsuario(createDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toUsuariodto(user));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getById(@PathVariable Long id) {
+    public ResponseEntity<UsuarioResponseDTO> getById(@PathVariable Long id) {
         Usuario user = usuarioService.buscarPorId(id);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(UsuarioMapper.toUsuariodto(user));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Usuario> updatePassword(@PathVariable Long id
-            , @RequestBody Usuario usuario) {
-        Usuario user = usuarioService.editarSenha(id, usuario.getPassword());
-        return ResponseEntity.ok(user);
+    public ResponseEntity<Void> updatePassword(@PathVariable Long id
+            , @Valid @RequestBody UsuarioSenhaDTO dto) {
+        Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmarSenha());
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> getAll() {
+    public ResponseEntity<List<UsuarioResponseDTO>> getAll() {
         List<Usuario> listaDeUsuarios = usuarioService.buscarTodos();
-        return ResponseEntity.ok(listaDeUsuarios);
+        return ResponseEntity.ok(UsuarioMapper.toListDTO(listaDeUsuarios) );
 
     }
 }
