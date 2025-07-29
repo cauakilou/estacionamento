@@ -6,6 +6,12 @@ import com.example.Estacionamento.jwt.JwtToken;
 import com.example.Estacionamento.jwt.JwtUserDetails;
 import com.example.Estacionamento.jwt.JwtUserDetailsService;
 import com.example.Estacionamento.web.DTO.UsuarioLoginDTO;
+import com.example.Estacionamento.web.DTO.UsuarioResponseDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +23,29 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name="Autenticação", description = "Recurso para proceder com a autenticação na API")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/")
-public class AutenticacaoControlller {
+public class AutenticacaoController {
     private final JwtUserDetailsService detailsService;
     private final AuthenticationManager authenticationManager;
 
+
+    @Operation(summary = "Autentica um usuario",description = "cria um Token de acesso para a API",
+            responses = {
+                    @ApiResponse(responseCode = "200",description = "Token gerado com Sucesso",
+                            content = @Content(mediaType = "Application/Json",
+                                    schema = @Schema(implementation = UsuarioResponseDTO.class))),
+                    @ApiResponse(responseCode = "400", description = "Credenciais invalidas",
+                            content = @Content(mediaType = "Application/Json",
+                                    schema = @Schema(implementation = ErrorMessage.class))),
+                    @ApiResponse(responseCode = "422", description = "Campos Invalidos",
+                            content = @Content(mediaType = "Application/Json",
+                                    schema = @Schema(implementation = ErrorMessage.class)))
+
+            })
     @PostMapping("/auth")
     public ResponseEntity<?> autenticar(
             @RequestBody @Valid UsuarioLoginDTO dto, HttpServletRequest request

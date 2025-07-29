@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ApiExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ErrorMessage> accessDeniedException(AccessDeniedException ex, HttpServletRequest request, BindingResult result){
+    public ResponseEntity<ErrorMessage> accessDeniedException(AccessDeniedException ex, HttpServletRequest request){
 
         log.error("API error - ",ex);
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage(request, HttpStatus.FORBIDDEN, "Campo(s) invalidos", result));
+                .body(new ErrorMessage(request, HttpStatus.FORBIDDEN, "Acesso proibido"));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -33,8 +33,8 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(request, HttpStatus.UNPROCESSABLE_ENTITY, "Campo(s) invalidos", result));
     }
 
-    @ExceptionHandler(UserNameUniqueViolationException.class)
-    public ResponseEntity<ErrorMessage> userNameUniqueViolationException(RuntimeException ex, HttpServletRequest request){
+    @ExceptionHandler({UserNameUniqueViolationException.class, CpfUniqueViolationException.class})
+    public ResponseEntity<ErrorMessage> UniqueViolationException(RuntimeException ex, HttpServletRequest request){
 
         log.error("API error - ",ex);
         return ResponseEntity.status(HttpStatus.CONFLICT)
