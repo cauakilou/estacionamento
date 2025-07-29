@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.br.CPF;
 public class ClienteCreateDTO {
     @NotNull
     @Size(min = 3,max = 100)
-    private String name;
+    private String nome;
     @Size(min = 11,max = 11)
     @CPF
     private String cpf;
