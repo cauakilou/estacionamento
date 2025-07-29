@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +55,7 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Recuperar um usuario com base no ID", description = "recupera um usuario pelo ID",
+            security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "200",description = "recurso recuperado com sucesso",
                             content = @Content(mediaType = "Application/Json",
@@ -64,7 +66,7 @@ public class UsuarioController {
 
             })
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') OR ( hasRole('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<UsuarioResponseDTO> getById(@PathVariable Long id) {
         Usuario user = usuarioService.buscarPorId(id);
         return ResponseEntity.ok(UsuarioMapper.toUsuariodto(user));
@@ -73,6 +75,7 @@ public class UsuarioController {
 
     @Operation(summary = "Atualizar a senha de um usuario",
             description = "Atualiza a senha de um usuario ao selecionar seu ID e passar 3 parametros, a senha atual e 2x a nova senha",
+            security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "204",description = "Senha alterado com sucesso",
                             content = @Content(mediaType = "Application/Json",
@@ -86,6 +89,7 @@ public class UsuarioController {
 
             })
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT') AND (#id == authentication.principal.id)")
     public ResponseEntity<Void> updatePassword(@PathVariable Long id
             , @Valid @RequestBody UsuarioSenhaDTO dto) {
         Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmarSenha());
@@ -93,12 +97,14 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Recuperar todos os usuarios do banco", description = "recupera todos os usuarios registrados",
-            responses = {
+            security = @SecurityRequirement(name = "security"),
+                responses = {
                     @ApiResponse(responseCode = "200",description = "recurso recuperado com sucesso",
                             content = @Content(mediaType = "Application/Json",
                                     array = @ArraySchema(schema = @Schema(implementation = UsuarioResponseDTO.class))))
             })
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UsuarioResponseDTO>> getAll() {
         List<Usuario> listaDeUsuarios = usuarioService.buscarTodos();
         return ResponseEntity.ok(UsuarioMapper.toListDTO(listaDeUsuarios) );

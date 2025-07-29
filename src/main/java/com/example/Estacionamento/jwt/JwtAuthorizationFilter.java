@@ -14,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+
 @Slf4j
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
@@ -23,13 +24,15 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        final String token = request.getHeader(JwtUtils.JWT_AUTHORIZATION);
+        final String header = request.getHeader(JwtUtils.JWT_AUTHORIZATION);
 
-        if(token == null || !token.startsWith(JwtUtils.JWT_BEARER)){
+        if(header == null || !header.startsWith(JwtUtils.JWT_BEARER)){
             log.info("JWT token esta nulo, vazio ou não iniciado com Bearer");
             filterChain.doFilter(request,response);
             return;
         }
+
+        final String token = header.substring(JwtUtils.JWT_BEARER.length());
 
         if(!JwtUtils.isTokenValido(token)){
             log.warn("Token invalido ou expirado");
@@ -37,9 +40,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             return;
         }
         String username = JwtUtils.getUsernameFromToken(token);
-
         toAuthentication(request,username);
-
         filterChain.doFilter(request,response);
     }
 
@@ -50,6 +51,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 .authenticated(userDetails, null,userDetails.getAuthorities());
 
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+        org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
     }
 
