@@ -1,4 +1,4 @@
-package com.example.Estacionamento.web.DTO;
+package com.example.Estacionamento.web.DTO.cliente;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

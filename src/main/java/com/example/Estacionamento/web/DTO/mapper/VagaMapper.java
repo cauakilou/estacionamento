@@ -2,11 +2,10 @@ package com.example.Estacionamento.web.DTO.mapper;
 
 
 import com.example.Estacionamento.Entity.Vaga;
-import com.example.Estacionamento.web.DTO.VagaCreateDTO;
-import com.example.Estacionamento.web.DTO.VagaResponseDTO;
+import com.example.Estacionamento.web.DTO.vaga.VagaCreateDTO;
+import com.example.Estacionamento.web.DTO.vaga.VagaResponseDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.mapper.Mapper;
 import org.modelmapper.ModelMapper;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

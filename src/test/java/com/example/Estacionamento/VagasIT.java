@@ -2,7 +2,8 @@ package com.example.Estacionamento;
 
 
 import com.example.Estacionamento.Exception.ErrorMessage;
-import com.example.Estacionamento.web.DTO.*;
+import com.example.Estacionamento.web.DTO.vaga.VagaCreateDTO;
+import com.example.Estacionamento.web.DTO.vaga.VagaResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import java.net.URI;
 
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

@@ -1,6 +1,7 @@
 package com.example.Estacionamento.Service;
 
 import com.example.Estacionamento.Entity.Cliente;
+import com.example.Estacionamento.Entity.ClienteVagas;
 import com.example.Estacionamento.Exception.CpfUniqueViolationException;
 import com.example.Estacionamento.Exception.EntityNotFoundException;
 import com.example.Estacionamento.Repository.ClienteRepository;
@@ -11,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -27,7 +26,7 @@ public class ClienteService {
         } catch (DataIntegrityViolationException e){
             throw new CpfUniqueViolationException(
                     String.format("cpf %s Não pode ser cadastrado, já existe",
-                            cliente.getCpf()
+                            cliente
                     )
             );
 
@@ -50,5 +49,11 @@ public class ClienteService {
     @Transactional(readOnly = true)
     public Cliente buscarPorUsuarioId(Long id) {
         return clienteRepository.findByUsuarioId(id);
+    }
+
+    public Cliente buscarPorCpf(String cpf) {
+        return clienteRepository.findByCpf(cpf).orElseThrow(
+                ()->new EntityNotFoundException(String.format("cliente com CPF=$s não encontrado",cpf))
+        );
     }
 }

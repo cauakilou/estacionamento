@@ -1,7 +1,7 @@
 package com.example.Estacionamento;
 
 import com.example.Estacionamento.jwt.JwtToken;
-import com.example.Estacionamento.web.DTO.UsuarioLoginDTO;
+import com.example.Estacionamento.web.DTO.usuario.UsuarioLoginDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient;
 

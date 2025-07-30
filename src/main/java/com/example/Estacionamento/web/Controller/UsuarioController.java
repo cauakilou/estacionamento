@@ -4,9 +4,9 @@ package com.example.Estacionamento.web.Controller;
 import com.example.Estacionamento.Entity.Usuario;
 import com.example.Estacionamento.Exception.ErrorMessage;
 import com.example.Estacionamento.Service.UsuarioService;
-import com.example.Estacionamento.web.DTO.UsuarioCreateDTO;
-import com.example.Estacionamento.web.DTO.UsuarioResponseDTO;
-import com.example.Estacionamento.web.DTO.UsuarioSenhaDTO;
+import com.example.Estacionamento.web.DTO.usuario.UsuarioCreateDTO;
+import com.example.Estacionamento.web.DTO.usuario.UsuarioResponseDTO;
+import com.example.Estacionamento.web.DTO.usuario.UsuarioSenhaDTO;
 import com.example.Estacionamento.web.DTO.mapper.UsuarioMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -17,14 +17,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-import org.modelmapper.internal.bytebuddy.implementation.Implementation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 @Tag(name = "Usuarios",description = "Contém todas as operações relativas aos recursos para cadastro, edição e leitura de um usuario")

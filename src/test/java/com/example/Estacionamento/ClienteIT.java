@@ -1,8 +1,8 @@
 package com.example.Estacionamento;
 
 import com.example.Estacionamento.Exception.ErrorMessage;
-import com.example.Estacionamento.web.DTO.ClienteCreateDTO;
-import com.example.Estacionamento.web.DTO.ClienteResponseDTO;
+import com.example.Estacionamento.web.DTO.cliente.ClienteCreateDTO;
+import com.example.Estacionamento.web.DTO.cliente.ClienteResponseDTO;
 import com.example.Estacionamento.web.DTO.PageableDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

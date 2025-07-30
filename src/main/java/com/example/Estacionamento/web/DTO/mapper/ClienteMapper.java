@@ -1,14 +1,11 @@
 package com.example.Estacionamento.web.DTO.mapper;
 
 import com.example.Estacionamento.Entity.Cliente;
-import com.example.Estacionamento.web.DTO.ClienteCreateDTO;
-import com.example.Estacionamento.web.DTO.ClienteResponseDTO;
+import com.example.Estacionamento.web.DTO.cliente.ClienteCreateDTO;
+import com.example.Estacionamento.web.DTO.cliente.ClienteResponseDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ClienteMapper {

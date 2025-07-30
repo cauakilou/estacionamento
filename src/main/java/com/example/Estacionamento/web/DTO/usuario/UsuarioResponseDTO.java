@@ -1,4 +1,4 @@
-package com.example.Estacionamento.web.DTO;
+package com.example.Estacionamento.web.DTO.usuario;
 
 
 import lombok.*;

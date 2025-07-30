@@ -3,10 +3,9 @@ package com.example.Estacionamento.web.Controller;
 
 import com.example.Estacionamento.Exception.ErrorMessage;
 import com.example.Estacionamento.jwt.JwtToken;
-import com.example.Estacionamento.jwt.JwtUserDetails;
 import com.example.Estacionamento.jwt.JwtUserDetailsService;
-import com.example.Estacionamento.web.DTO.UsuarioLoginDTO;
-import com.example.Estacionamento.web.DTO.UsuarioResponseDTO;
+import com.example.Estacionamento.web.DTO.usuario.UsuarioLoginDTO;
+import com.example.Estacionamento.web.DTO.usuario.UsuarioResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

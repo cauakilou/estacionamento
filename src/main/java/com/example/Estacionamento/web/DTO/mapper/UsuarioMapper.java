@@ -1,8 +1,8 @@
 package com.example.Estacionamento.web.DTO.mapper;
 
 import com.example.Estacionamento.Entity.Usuario;
-import com.example.Estacionamento.web.DTO.UsuarioCreateDTO;
-import com.example.Estacionamento.web.DTO.UsuarioResponseDTO;
+import com.example.Estacionamento.web.DTO.usuario.UsuarioCreateDTO;
+import com.example.Estacionamento.web.DTO.usuario.UsuarioResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 

@@ -1,11 +1,11 @@
 package com.example.Estacionamento;
 
 import com.example.Estacionamento.jwt.JwtToken;
-import com.example.Estacionamento.web.DTO.UsuarioCreateDTO;
-import com.example.Estacionamento.web.DTO.UsuarioLoginDTO;
-import com.example.Estacionamento.web.DTO.UsuarioResponseDTO;
+import com.example.Estacionamento.web.DTO.usuario.UsuarioCreateDTO;
+import com.example.Estacionamento.web.DTO.usuario.UsuarioLoginDTO;
+import com.example.Estacionamento.web.DTO.usuario.UsuarioResponseDTO;
 import com.example.Estacionamento.Exception.ErrorMessage;
-import com.example.Estacionamento.web.DTO.UsuarioSenhaDTO;
+import com.example.Estacionamento.web.DTO.usuario.UsuarioSenhaDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
