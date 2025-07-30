@@ -122,6 +122,25 @@ public class ClienteController {
         return ResponseEntity.ok((PageableMapper.pageableToDTO(listaDeClientes)));
     }
 
+    @Operation(summary = "Recuperar dados",
+            description = "recupera todos os dados do cliente via Token "+
+                    "ADMINS apenas",
+            security = @SecurityRequirement(name = "security"),
+            responses = {
+                    @ApiResponse(responseCode = "200",description = "recursos recuperado com sucesso",
+                            content = @Content(mediaType = "Application/Json",
+                                    schema = @Schema(implementation = UsuarioResponseDTO.class))),
+                    @ApiResponse(responseCode = "403", description = "Não Autorizado para Admins",
+                            content = @Content(mediaType = "Application/Json",
+                                    schema = @Schema(implementation = ErrorMessage.class)))
+            })
+    @GetMapping(path = "/detalhes")
+    @PreAuthorize("hasRole('CLIENT')")
+    public ResponseEntity<ClienteResponseDTO> getDetalhess(@AuthenticationPrincipal JwtUserDetails userDetails){
+        Cliente cliente = clienteService.buscarPorUsuarioId(userDetails.getId());
+        return ResponseEntity.ok((ClienteMapper.toDto(cliente)));
+    }
+
 
 
 
