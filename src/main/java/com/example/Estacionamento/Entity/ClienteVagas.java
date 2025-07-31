@@ -34,7 +34,7 @@ public class ClienteVagas implements Serializable {
     @Column(name = "numero_recibo",nullable = false,unique = true,length = 15)
     private String recibo;
 
-    @Column(name = "placa",nullable = false,unique = true,length = 45)
+    @Column(name = "placa",nullable = false,length = 45)
     private String placa;
 
     @Column(name = "marca",nullable = false,length = 45)
