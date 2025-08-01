@@ -27,7 +27,7 @@ public class EstacionamentoUtils {
 
     public static BigDecimal calcularCusto(LocalDateTime entrada, LocalDateTime saida) {
         long minutes = entrada.until(saida, ChronoUnit.MINUTES);
-        double total = 0.0;
+        double total;
 
         if (minutes <= 15) {
 
@@ -38,10 +38,8 @@ public class EstacionamentoUtils {
             total = PRIMEIROS_60_MINUTES;
             // complete com a lógica para calcular o custo até os primeiros 60 minutos de uso
         } else {
-            double adicional = (minutes-60)/15;
+            double adicional = (double) (minutes - 60) /15;
             int adicionalInteiro = (int)adicional;
-            System.out.println(adicional);
-            System.out.println(adicionalInteiro);
             if((minutes-60)%15 != 0){
                 ++adicionalInteiro;
             }
@@ -51,13 +49,13 @@ public class EstacionamentoUtils {
 
         }
 
-        return new BigDecimal(total).setScale(2, RoundingMode.HALF_EVEN);
+        return BigDecimal.valueOf(total).setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public static BigDecimal calcularDesconto(BigDecimal custo, long numeroDeVezes) {
 
         BigDecimal desconto = ((numeroDeVezes > 0) && (numeroDeVezes % 10 == 0))
-                ? custo.multiply(new BigDecimal(DESCONTO_PERCENTUAL))
+                ? custo.multiply(BigDecimal.valueOf(DESCONTO_PERCENTUAL))
                 : new BigDecimal(0);
 
 

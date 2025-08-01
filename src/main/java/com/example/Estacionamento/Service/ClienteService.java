@@ -1,7 +1,6 @@
 package com.example.Estacionamento.Service;
 
 import com.example.Estacionamento.Entity.Cliente;
-import com.example.Estacionamento.Entity.ClienteVagas;
 import com.example.Estacionamento.Exception.CpfUniqueViolationException;
 import com.example.Estacionamento.Exception.EntityNotFoundException;
 import com.example.Estacionamento.Repository.ClienteRepository;
@@ -53,7 +52,7 @@ public class ClienteService {
 
     public Cliente buscarPorCpf(String cpf) {
         return clienteRepository.findByCpf(cpf).orElseThrow(
-                ()->new EntityNotFoundException(String.format("cliente com CPF=$s não encontrado",cpf))
+                ()->new EntityNotFoundException(String.format("cliente com CPF=%s não encontrado",cpf))
         );
     }
 }

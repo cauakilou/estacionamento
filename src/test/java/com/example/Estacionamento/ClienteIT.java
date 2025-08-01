@@ -14,14 +14,14 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/sql/clientes/Clientes-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "/sql/clientes/Clientes-delete.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-public class ClienteIT {
+ class ClienteIT {
 
     @Autowired
     WebTestClient testClient;
 
     //Testes para a criação de clientes
     @Test
-    public void CriarCliente_dadosValidos_status201(){
+     void CriarCliente_dadosValidos_status201(){
         ClienteResponseDTO responseBody = testClient
                 .post()
                 .uri("/api/v1/clientes")
@@ -40,7 +40,7 @@ public class ClienteIT {
     }
 
     @Test
-    public void CriarCliente_cpfRepetido_status409(){
+     void CriarCliente_cpfRepetido_status409(){
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/clientes")
@@ -57,7 +57,7 @@ public class ClienteIT {
     }
 
     @Test
-    public void CriarCliente_dadosInvalidos_status422(){
+     void CriarCliente_dadosInvalidos_status422(){
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/clientes")
@@ -102,7 +102,7 @@ public class ClienteIT {
     }
 
     @Test
-    public void CriarCliente_RoleAdmin_status403() {
+     void CriarCliente_RoleAdmin_status403() {
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/clientes")
@@ -119,10 +119,10 @@ public class ClienteIT {
 
     }
 
-    //Testes para recuperar os clientes por ID
+    //Testes para recuperar os clientes por ‘ID’
 
     @Test
-    public void RecuperarPeloIdCliente_dadosValidos_status200(){
+     void RecuperarPeloIdCliente_dadosValidos_status200(){
         ClienteResponseDTO responseBody = testClient
                 .get()
                 .uri("/api/v1/clientes/10")
@@ -139,7 +139,7 @@ public class ClienteIT {
     }
 
     @Test
-    public void RecuperarPeloIdCliente_RoleCliente_status403() {
+     void RecuperarPeloIdCliente_RoleCliente_status403() {
         ErrorMessage responseBody = testClient
                 .get()
                 .uri("/api/v1/clientes/10")
@@ -154,7 +154,7 @@ public class ClienteIT {
     }
 
     @Test
-    public void RecuperarPeloIdCliente_IdInvalido_status404() {
+     void RecuperarPeloIdCliente_IdInvalido_status404() {
         ErrorMessage responseBody = testClient
                 .get()
                 .uri("/api/v1/clientes/11")
@@ -172,7 +172,7 @@ public class ClienteIT {
     //Testes para recuperar todos os clientes
 
     @Test
-    public void RecuperarClientes_dadosValidos_status200(){
+     void RecuperarClientes_dadosValidos_status200(){
             PageableDTO responseBody = testClient
                 .get()
                 .uri("/api/v1/clientes")
@@ -184,7 +184,7 @@ public class ClienteIT {
 
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
         org.assertj.core.api.Assertions.assertThat(responseBody.getTotalElements()).isEqualTo(2);
-        org.assertj.core.api.Assertions.assertThat(responseBody.getNumber()).isEqualTo(0);
+        org.assertj.core.api.Assertions.assertThat(responseBody.getNumber()).isZero();
         org.assertj.core.api.Assertions.assertThat(responseBody.getTotalPages()).isEqualTo(1);
 
         responseBody = testClient
@@ -197,13 +197,13 @@ public class ClienteIT {
                 .returnResult().getResponseBody();
 
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
-        org.assertj.core.api.Assertions.assertThat(responseBody.getContent().size()).isEqualTo(1);
+        org.assertj.core.api.Assertions.assertThat(responseBody.getContent()).hasSize(1);
         org.assertj.core.api.Assertions.assertThat(responseBody.getNumber()).isEqualTo(1);
         org.assertj.core.api.Assertions.assertThat(responseBody.getTotalPages()).isEqualTo(2);
     }
 
     @Test
-    public void RecuperarClientes_RoleInvalida_status403() {
+     void RecuperarClientes_RoleInvalida_status403() {
         ErrorMessage responseBody = testClient
                 .get()
                 .uri("/api/v1/clientes")
@@ -221,7 +221,7 @@ public class ClienteIT {
     //Testes para Recuperar os dados do cliente
 
     @Test
-    public void RecuperarClienteDetalhes_dadosValidos_status200() {
+     void RecuperarClienteDetalhes_dadosValidos_status200() {
         ClienteResponseDTO responseBody = testClient
                 .get()
                 .uri("/api/v1/clientes/detalhes")
@@ -237,7 +237,7 @@ public class ClienteIT {
     }
 
     @Test
-    public void RecuperarClienteDetalhes_Admin_status403() {
+     void RecuperarClienteDetalhes_Admin_status403() {
         ErrorMessage responseBody = testClient
                 .get()
                 .uri("/api/v1/clientes/detalhes")

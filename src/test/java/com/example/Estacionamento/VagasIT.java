@@ -17,14 +17,14 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/sql/vagas/vagas-insert.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "/sql/vagas/vagas-delete.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-public class VagasIT {
+ class VagasIT {
 
     @Autowired
     WebTestClient testClient;
 
     //Testes referentes ao metodo post
     @Test
-    public void createVaga_parametrosValidos_CriadoComStatus201(){
+     void createVaga_parametrosValidos_CriadoComStatus201(){
          testClient
                 .post()
                 .uri("/api/v1/vagas")
@@ -47,7 +47,7 @@ public class VagasIT {
     }
 
     @Test
-    public void createVaga_parametrosInvalidos_ERROR422(){
+     void createVaga_parametrosInvalidos_ERROR422(){
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/vagas")
@@ -82,7 +82,7 @@ public class VagasIT {
     }
 
     @Test
-    public void createVaga_codigoRepetido_ERROR409(){
+     void createVaga_codigoRepetido_ERROR409(){
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/vagas")
@@ -117,7 +117,7 @@ public class VagasIT {
     }
 
     @Test
-    public void createVaga_client_ERROR403() {
+     void createVaga_client_ERROR403() {
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/vagas")
@@ -136,7 +136,7 @@ public class VagasIT {
     //Testes para encontrar vagas
 
     @Test
-    public void searchVaga_parametrosValidos_Status200() {
+     void searchVaga_parametrosValidos_Status200() {
         VagaResponseDTO responseBody = testClient
                 .get()
                 .uri("/api/v1/vagas/A-01")
@@ -168,7 +168,7 @@ public class VagasIT {
     }
 
     @Test
-    public void searchVaga_parametrosInValidos_Status404() {
+     void searchVaga_parametrosInValidos_Status404() {
         ErrorMessage responseBody = testClient
                 .get()
                 .uri("/api/v1/vagas/A-11")
@@ -185,7 +185,7 @@ public class VagasIT {
     }
 
     @Test
-    public void searchVaga_SemRole_Status403() {
+     void searchVaga_SemRole_Status403() {
         ErrorMessage responseBody = testClient
                 .get()
                 .uri("/api/v1/vagas/A-01")

@@ -7,7 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UsuarioMapper {
 
@@ -33,7 +32,7 @@ public class UsuarioMapper {
     }
 
     public static List<UsuarioResponseDTO> toListDTO(List<Usuario> usuarios){
-        return usuarios.stream().map(UsuarioMapper::toUsuariodto).collect(Collectors.toList());
+        return usuarios.stream().map(UsuarioMapper::toUsuariodto).toList();
 
     }
  }

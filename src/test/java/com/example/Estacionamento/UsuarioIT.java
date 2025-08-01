@@ -21,14 +21,14 @@ import java.util.List;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/sql/usuarios/usuarios-insert.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "/sql/usuarios/usuarios-delete.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-public class UsuarioIT {
+ class UsuarioIT {
 
     @Autowired
     WebTestClient testClient;
 
     //Testes referentes ao metodo post
     @Test
-    public void createUsuario_ComUsernamePasswordValidos_RetornarUsuarioCriadoComStatus201(){
+     void createUsuario_ComUsernamePasswordValidos_RetornarUsuarioCriadoComStatus201(){
         UsuarioResponseDTO responseBody = testClient
                 .post()
                 .uri("/api/v1/usuarios")
@@ -46,7 +46,7 @@ public class UsuarioIT {
     }
 
     @Test
-    public void createUsuario_ComUsernameinvalido_RetornarErrorMessageStatus422() {
+     void createUsuario_ComUsernameinvalido_RetornarErrorMessageStatus422() {
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/usuarios")
@@ -88,7 +88,7 @@ public class UsuarioIT {
     }
 
     @Test
-    public void createUsuario_ComPasswordInvalido_RetornarErrorMessageStatus422() {
+     void createUsuario_ComPasswordInvalido_RetornarErrorMessageStatus422() {
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/usuarios")
@@ -130,7 +130,7 @@ public class UsuarioIT {
     }
 
     @Test
-    public void createUsuario_ComUserRepetido_RetornarErrorMessageStatus409(){
+     void createUsuario_ComUserRepetido_RetornarErrorMessageStatus409(){
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/usuarios")
@@ -147,7 +147,7 @@ public class UsuarioIT {
 
     //Testes para localizar um usuario pelo ID
     @Test
-    public void buscarUsuario_ComIdExistente_RetornarUsuarioCriadoComStatus200() {
+     void buscarUsuario_ComIdExistente_RetornarUsuarioCriadoComStatus200() {
         UsuarioResponseDTO responseBody = testClient
                 .get()
                 .uri("/api/v1/usuarios/100")
@@ -178,7 +178,7 @@ public class UsuarioIT {
     }
 
     @Test
-    public void buscarUsuario_ComIdInvalido_RetornarErroMessageStatus404() {
+     void buscarUsuario_ComIdInvalido_RetornarErroMessageStatus404() {
         ErrorMessage responseBody = testClient
                 .get()
                 .uri("/api/v1/usuarios/1000")
@@ -193,7 +193,7 @@ public class UsuarioIT {
     }
 
     @Test
-    public void buscarUsuario_ComUsuarioClienteBuscandoCliente_RetornarErroMessageStatus404() {
+     void buscarUsuario_ComUsuarioClienteBuscandoCliente_RetornarErroMessageStatus404() {
         ErrorMessage responseBody = testClient
                 .get()
                 .uri("/api/v1/usuarios/123")
@@ -209,7 +209,7 @@ public class UsuarioIT {
     //Testes para Aleteração de senha
 
     @Test
-    public void AtualizarUsuario_ComIdExistenteSenhaValida_RetornarUsuarioCriadoComStatus204() {
+     void AtualizarUsuario_ComIdExistenteSenhaValida_RetornarUsuarioCriadoComStatus204() {
         testClient
                 .patch()
                 .uri("/api/v1/usuarios/100")
@@ -221,7 +221,7 @@ public class UsuarioIT {
     }
 
     @Test
-    public void AtualizarUsuario_ComIdExistenteSenhaValidaOutroUsuario_RetornarForbiden403() {
+     void AtualizarUsuario_ComIdExistenteSenhaValidaOutroUsuario_RetornarForbiden403() {
         testClient
                 .patch()
                 .uri("/api/v1/usuarios/123")
@@ -233,7 +233,7 @@ public class UsuarioIT {
     }
 
     @Test
-    public void AtualizarUsuario_ComIdInvalido_RetornarErroMessageStatus401() {
+     void AtualizarUsuario_ComIdInvalido_RetornarErroMessageStatus401() {
         ErrorMessage responseBody = testClient
                 .patch()
                 .uri("/api/v1/usuarios/1000")
@@ -248,7 +248,7 @@ public class UsuarioIT {
     }
 
     @Test
-    public void AtualizarUsuario_ComSenhasInvalidas_RetornarErroMessageStatus400() {
+     void AtualizarUsuario_ComSenhasInvalidas_RetornarErroMessageStatus400() {
         ErrorMessage responseBody = testClient
                 .patch()
                 .uri("/api/v1/usuarios/100")
@@ -281,7 +281,7 @@ public class UsuarioIT {
     //Testes para a requisição da tabela completa
 
     @Test
-    public void buscarUsuarios_ComIdExistenteAdmin_RetornarUsuarioCriadosComStatus200() {
+     void buscarUsuarios_ComIdExistenteAdmin_RetornarUsuarioCriadosComStatus200() {
         List<UsuarioResponseDTO> responseBody = testClient
                 .get()
                 .uri("/api/v1/usuarios")
@@ -293,12 +293,12 @@ public class UsuarioIT {
 
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
         org.assertj.core.api.Assertions.assertThat(responseBody.isEmpty()).isNotEqualTo(true);
-        org.assertj.core.api.Assertions.assertThat(responseBody.size()).isEqualTo(3);
+        org.assertj.core.api.Assertions.assertThat(responseBody).hasSize(3);
     }
 
     @Test
-    public void buscarUsuarios_ComIdExistenteUsuario_RetornarStatus401() {
-        ErrorMessage responseBody = (ErrorMessage) testClient
+     void buscarUsuarios_ComIdExistenteUsuario_RetornarStatus401() {
+        ErrorMessage responseBody = testClient
                 .get()
                 .uri("/api/v1/usuarios")
                 .headers(JwtAuthentication.getHeaderAuthorization(testClient,"caua@email.com","654321"))
@@ -314,7 +314,7 @@ public class UsuarioIT {
     //Testes de autenticação
 
     @Test
-    public void AutenticarUsuario_ComUsernamePasswordValidos_RetornarTokenCriadoComStatus200(){
+     void AutenticarUsuario_ComUsernamePasswordValidos_RetornarTokenCriadoComStatus200(){
         JwtToken responseBody = testClient
                 .post()
                 .uri("/api/v1/auth")
@@ -329,7 +329,7 @@ public class UsuarioIT {
     }
 
     @Test
-    public void AutenticarUsuario_ComUsernamePasswordInValidos_RetornarErrosMessageStatus400(){
+     void AutenticarUsuario_ComUsernamePasswordInValidos_RetornarErrosMessageStatus400(){
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/auth")
@@ -358,7 +358,7 @@ public class UsuarioIT {
     }
 
     @Test
-    public void AutenticarUsuario_ComCamposInvalidos_RetornarErrosMessageStatus422(){
+     void AutenticarUsuario_ComCamposInvalidos_RetornarErrosMessageStatus422(){
         ErrorMessage responseBody = testClient
                 .post()
                 .uri("/api/v1/auth")

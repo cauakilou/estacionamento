@@ -5,7 +5,6 @@ import com.example.Estacionamento.Exception.EntityNotFoundException;
 import com.example.Estacionamento.Exception.PasswordInvalidException;
 import com.example.Estacionamento.Exception.UserNameUniqueViolationException;
 import com.example.Estacionamento.Repository.UsuarioRepository;
-import jakarta.transaction.Transactional.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

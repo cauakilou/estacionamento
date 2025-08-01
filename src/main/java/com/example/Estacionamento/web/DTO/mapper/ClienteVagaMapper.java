@@ -1,7 +1,6 @@
 package com.example.Estacionamento.web.DTO.mapper;
 
 
-import com.example.Estacionamento.Entity.Cliente;
 import com.example.Estacionamento.Entity.ClienteVagas;
 import com.example.Estacionamento.web.DTO.Estacionamento.EstacionamentoCreateDTO;
 import com.example.Estacionamento.web.DTO.Estacionamento.EstacionamentoResponseDTO;

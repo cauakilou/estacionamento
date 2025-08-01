@@ -2,9 +2,7 @@ package com.example.Estacionamento;
 
 import com.example.Estacionamento.Exception.ErrorMessage;
 import com.example.Estacionamento.web.DTO.Estacionamento.EstacionamentoCreateDTO;
-import com.example.Estacionamento.web.DTO.Estacionamento.EstacionamentoResponseDTO;
 import com.example.Estacionamento.web.DTO.PageableDTO;
-import com.example.Estacionamento.web.DTO.vaga.VagaResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +16,14 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/sql/estacionamentos/estacionamentos-insert.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "/sql/estacionamentos/estacionamentos-delete.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-public class EstacionamentoIT {
+ class EstacionamentoIT {
 
     @Autowired
     WebTestClient testClient;
 
     // Testes da operação de Check-in
     @Test
-    public void criarChekIN_comDadosValidos_201Elocation(){
+     void criarChekIN_comDadosValidos_201Elocation(){
         EstacionamentoCreateDTO createDTO =EstacionamentoCreateDTO.builder()
                 .placa("WER-1111").marca("FIAT").modelo("palio 1.0")
                 .cor("AZUL").clienteCpf("09191773016")
@@ -50,7 +48,7 @@ public class EstacionamentoIT {
     }
 
     @Test
-    public void criarChekIN_semAcesso_Status403(){
+     void criarChekIN_semAcesso_Status403(){
         EstacionamentoCreateDTO createDTO =EstacionamentoCreateDTO.builder()
                 .placa("WER-1111").marca("FIAT").modelo("palio 1.0")
                 .cor("AZUL").clienteCpf("09191773016")
@@ -69,7 +67,7 @@ public class EstacionamentoIT {
     }
 
     @Test
-    public void criarChekIN_comDadosInvalidos_Status422(){
+     void criarChekIN_comDadosInvalidos_Status422(){
         EstacionamentoCreateDTO createDTO =EstacionamentoCreateDTO.builder()
                 .placa("").marca("FIAT").modelo("palio 1.0")
                 .cor("AZUL").clienteCpf("09191773016")
@@ -152,7 +150,7 @@ public class EstacionamentoIT {
     }
 
     @Test
-    public void criarChekIN_comCpfInexistente_Status404() {
+     void criarChekIN_comCpfInexistente_Status404() {
         EstacionamentoCreateDTO createDTO = EstacionamentoCreateDTO.builder()
                 .placa("WER-1111").marca("FIAT").modelo("palio 1.0")
                 .cor("AZUL").clienteCpf("52524279847")
@@ -174,7 +172,7 @@ public class EstacionamentoIT {
     @Sql(scripts = "/sql/estacionamentos/estacionamentos-insert-ocupada.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/estacionamentos/estacionamentos-delete-ocupada.sql",executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
-    public void criarChekIN_comVagasOcupadas_Status404() {
+     void criarChekIN_comVagasOcupadas_Status404() {
         EstacionamentoCreateDTO createDTO = EstacionamentoCreateDTO.builder()
                 .placa("WER-1111").marca("FIAT").modelo("palio 1.0")
                 .cor("AZUL").clienteCpf("09191773016")
@@ -196,7 +194,7 @@ public class EstacionamentoIT {
     // Testes da operação de RecuperarRecibo
 
     @Test
-    public void RecuperaRecibo_comReciboExistente_Status200() {
+     void RecuperaRecibo_comReciboExistente_Status200() {
         testClient
                 .get().uri("/api/v1/estacionamentos/check-in/20250313-101300")
                 .headers(JwtAuthentication.getHeaderAuthorization(testClient, "ana@email.com.br", "123456"))
@@ -215,7 +213,7 @@ public class EstacionamentoIT {
     }
 
     @Test
-    public void RecuperaRecibo_comReciboInexistente_Status404() {
+     void RecuperaRecibo_comReciboInexistente_Status404() {
         testClient
                 .get().uri("/api/v1/estacionamentos/check-in/20230313-101310")
                 .headers(JwtAuthentication.getHeaderAuthorization(testClient, "ana@email.com.br", "123456"))
@@ -230,7 +228,7 @@ public class EstacionamentoIT {
     //Testes da operação de check-out
 
     @Test
-    public void CriarcheckOut_comReciboExistente_Status200(){
+     void CriarcheckOut_comReciboExistente_Status200(){
         testClient.put().uri("/api/v1/estacionamentos/check-out/20250313-101300")
                 .contentType(MediaType.APPLICATION_JSON)
                 .headers(JwtAuthentication.getHeaderAuthorization(testClient, "ana@email.com.br","123456"))
@@ -251,7 +249,7 @@ public class EstacionamentoIT {
     }
 
     @Test
-    public void CriarcheckOut_comReciboinexistente_Status404(){
+     void CriarcheckOut_comReciboinexistente_Status404(){
         testClient.put().uri("/api/v1/estacionamentos/check-out/20230313-101300")
                 .contentType(MediaType.APPLICATION_JSON)
                 .headers(JwtAuthentication.getHeaderAuthorization(testClient, "ana@email.com.br","123456"))
@@ -263,7 +261,7 @@ public class EstacionamentoIT {
     }
 
     @Test
-    public void CriarcheckOut_comReciboinexistente_Status403(){
+     void CriarcheckOut_comReciboinexistente_Status403(){
         testClient.put().uri("/api/v1/estacionamentos/check-out/20250313-101300")
                 .contentType(MediaType.APPLICATION_JSON)
                 .headers(JwtAuthentication.getHeaderAuthorization(testClient, "bia@email.com.br","123456"))
@@ -278,7 +276,7 @@ public class EstacionamentoIT {
     //Testes de recuperar o cliente pelo CPF
 
     @Test
-    public void RecuperarVagas_cpfValido_status200(){
+     void RecuperarVagas_cpfValido_status200(){
         PageableDTO responseBody = testClient
                 .get()
                 .uri("/api/v1/estacionamentos/cpf/98401203015")
@@ -290,7 +288,7 @@ public class EstacionamentoIT {
 
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
         org.assertj.core.api.Assertions.assertThat(responseBody.getTotalElements()).isEqualTo(2);
-        org.assertj.core.api.Assertions.assertThat(responseBody.getNumber()).isEqualTo(0);
+        org.assertj.core.api.Assertions.assertThat(responseBody.getNumber()).isZero();
         org.assertj.core.api.Assertions.assertThat(responseBody.getTotalPages()).isEqualTo(1);
 
         responseBody = testClient
@@ -303,13 +301,13 @@ public class EstacionamentoIT {
                 .returnResult().getResponseBody();
 
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
-        org.assertj.core.api.Assertions.assertThat(responseBody.getContent().size()).isEqualTo(1);
+        org.assertj.core.api.Assertions.assertThat(responseBody.getContent()).hasSize(1);
         org.assertj.core.api.Assertions.assertThat(responseBody.getNumber()).isEqualTo(1);
         org.assertj.core.api.Assertions.assertThat(responseBody.getTotalPages()).isEqualTo(2);
     }
 
     @Test
-    public void RecuperarVagas_roleCliente_status403(){
+     void RecuperarVagas_roleCliente_status403(){
         ErrorMessage responseBody = testClient
                 .get()
                 .uri("/api/v1/estacionamentos/cpf/98401203015")
@@ -326,7 +324,7 @@ public class EstacionamentoIT {
     //Testes de recuperar pelo Cliente
 
     @Test
-    public void RecuperarVagas_cliente_status200(){
+     void RecuperarVagas_cliente_status200(){
         PageableDTO responseBody = testClient
                 .get()
                 .uri("/api/v1/estacionamentos")
@@ -338,7 +336,7 @@ public class EstacionamentoIT {
 
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
         org.assertj.core.api.Assertions.assertThat(responseBody.getTotalElements()).isEqualTo(1);
-        org.assertj.core.api.Assertions.assertThat(responseBody.getNumber()).isEqualTo(0);
+        org.assertj.core.api.Assertions.assertThat(responseBody.getNumber()).isZero();
         org.assertj.core.api.Assertions.assertThat(responseBody.getTotalPages()).isEqualTo(1);
 
         responseBody = testClient
@@ -351,8 +349,8 @@ public class EstacionamentoIT {
                 .returnResult().getResponseBody();
 
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
-        org.assertj.core.api.Assertions.assertThat(responseBody.getContent().size()).isEqualTo(1);
-        org.assertj.core.api.Assertions.assertThat(responseBody.getNumber()).isEqualTo(0);
+        org.assertj.core.api.Assertions.assertThat(responseBody.getContent()).hasSize(1);
+        org.assertj.core.api.Assertions.assertThat(responseBody.getNumber()).isZero();
         org.assertj.core.api.Assertions.assertThat(responseBody.getTotalPages()).isEqualTo(1);
 
     }
